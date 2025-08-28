@@ -85,6 +85,7 @@ export default function AISandboxPage() {
   const [loadingStage, setLoadingStage] = useState<'gathering' | 'planning' | 'generating' | null>(null);
   const [sandboxFiles, setSandboxFiles] = useState<Record<string, string>>({});
   const [fileStructure, setFileStructure] = useState<string>('');
+  const [mode, setMode] = useState<'clone' | 'generate'>('clone');
   
   const [conversationContext, setConversationContext] = useState<{
     scrapedWebsites: Array<{ url: string; content: any; timestamp: Date }>;
@@ -1094,23 +1095,23 @@ Tip: I automatically detect and install npm packages from your code imports (lik
             {generationProgress.isGenerating && (generationProgress.isThinking || generationProgress.thinkingText) && (
               <div className="px-6 pb-6">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="text-purple-600 font-medium flex items-center gap-2">
+                  <div className="text-slate-700 font-medium flex items-center gap-2">
                     {generationProgress.isThinking ? (
                       <>
-                        <div className="w-2 h-2 bg-purple-600 rounded-full animate-pulse" />
+                        <div className="w-2 h-2 bg-slate-700 rounded-full animate-pulse" />
                         AI is thinking...
                       </>
                     ) : (
                       <>
-                        <span className="text-purple-600">✓</span>
+                        <span className="text-slate-700">✓</span>
                         Thought for {generationProgress.thinkingDuration || 0} seconds
                       </>
                     )}
                   </div>
                 </div>
                 {generationProgress.thinkingText && (
-                  <div className="bg-purple-950 border border-purple-700 rounded-lg p-4 max-h-48 overflow-y-auto scrollbar-hide">
-                    <pre className="text-xs font-mono text-purple-300 whitespace-pre-wrap">
+                  <div className="bg-slate-100 border border-slate-300 rounded-lg p-4 max-h-48 overflow-y-auto scrollbar-hide">
+                    <pre className="text-xs font-mono text-slate-700 whitespace-pre-wrap">
                       {generationProgress.thinkingText}
                     </pre>
                   </div>
@@ -1174,19 +1175,19 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                       <div className="text-center">
                         <div className="mb-8 relative">
                           <div className="w-24 h-24 mx-auto">
-                            <div className="absolute inset-0 border-4 border-gray-800 rounded-full"></div>
-                            <div className="absolute inset-0 border-4 border-green-500 rounded-full animate-spin border-t-transparent"></div>
+                            <div className="absolute inset-0 border-4 border-slate-800 rounded-full"></div>
+                            <div className="absolute inset-0 border-4 border-slate-900 rounded-full animate-spin border-t-transparent"></div>
                           </div>
                         </div>
-                        <h3 className="text-xl font-medium text-white mb-2">AI is analyzing your request</h3>
-                        <p className="text-gray-400 text-sm">{generationProgress.status || 'Preparing to generate code...'}</p>
+                        <h3 className="text-xl font-medium text-slate-900 mb-2">AI is analyzing your request</h3>
+                        <p className="text-slate-600 text-sm">{generationProgress.status || 'Preparing to generate code...'}</p>
                       </div>
                     </div>
                   ) : (
                     <div className="bg-black border border-gray-200 rounded-lg overflow-hidden">
                       <div className="px-4 py-2 bg-gray-100 text-gray-900 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+                          <div className="w-3 h-3 border-2 border-slate-700 border-t-transparent rounded-full animate-spin" />
                           <span className="font-mono text-sm">Streaming code...</span>
                         </div>
                       </div>
@@ -1218,10 +1219,10 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                             <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
                             <span className="font-mono text-sm">{generationProgress.currentFile.path}</span>
                             <span className={`px-2 py-0.5 text-xs rounded ${
-                              generationProgress.currentFile.type === 'css' ? 'bg-blue-600 text-white' :
-                              generationProgress.currentFile.type === 'javascript' ? 'bg-yellow-600 text-white' :
-                              generationProgress.currentFile.type === 'json' ? 'bg-green-600 text-white' :
-                              'bg-gray-200 text-gray-700'
+                              generationProgress.currentFile.type === 'css' ? 'bg-slate-700 text-white' :
+                              generationProgress.currentFile.type === 'javascript' ? 'bg-slate-800 text-white' :
+                              generationProgress.currentFile.type === 'json' ? 'bg-slate-900 text-white' :
+                              'bg-slate-200 text-slate-700'
                             }`}>
                               {generationProgress.currentFile.type === 'javascript' ? 'JSX' : generationProgress.currentFile.type.toUpperCase()}
                             </span>
@@ -1246,7 +1247,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                           >
                             {generationProgress.currentFile.content}
                           </SyntaxHighlighter>
-                          <span className="inline-block w-2 h-3 bg-orange-400 ml-4 mb-4 animate-pulse" />
+                          <span className="inline-block w-2 h-3 bg-slate-700 ml-4 mb-4 animate-pulse" />
                         </div>
                       </div>
                     )}
@@ -1260,10 +1261,10 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                             <span className="font-mono text-sm">{file.path}</span>
                           </div>
                           <span className={`px-2 py-0.5 text-xs rounded ${
-                            file.type === 'css' ? 'bg-blue-600 text-white' :
-                            file.type === 'javascript' ? 'bg-yellow-600 text-white' :
-                            file.type === 'json' ? 'bg-green-600 text-white' :
-                            'bg-gray-200 text-gray-700'
+                            file.type === 'css' ? 'bg-slate-700 text-white' :
+                            file.type === 'javascript' ? 'bg-slate-800 text-white' :
+                            file.type === 'json' ? 'bg-slate-900 text-white' :
+                            'bg-slate-200 text-slate-700'
                           }`}>
                             {file.type === 'javascript' ? 'JSX' : file.type.toUpperCase()}
                           </span>
@@ -1297,7 +1298,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
                       <div className="bg-black border border-gray-200 rounded-lg overflow-hidden">
                         <div className="px-4 py-2 bg-[#36322F] text-white flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                            <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
                             <span className="font-mono text-sm">Processing...</span>
                           </div>
                         </div>
@@ -1379,18 +1380,18 @@ Tip: I automatically detect and install npm packages from your code imports (lik
       // Don't show loading overlay for edits
       if (loadingStage || (generationProgress.isGenerating && !generationProgress.isEdit)) {
         return (
-          <div className="relative w-full h-full bg-gray-50 flex items-center justify-center">
+          <div className="relative w-full h-full bg-slate-50 flex items-center justify-center">
             <div className="text-center">
               <div className="mb-8">
-                <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin mx-auto"></div>
+                <div className="w-16 h-16 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin mx-auto"></div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {loadingStage === 'gathering' && 'Gathering website information...'}
+              <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                {loadingStage === 'gathering' && (mode === 'clone' ? 'Gathering website information...' : 'Analyzing your idea...')}
                 {loadingStage === 'planning' && 'Planning your design...'}
                 {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Generating your application...'}
               </h3>
-              <p className="text-gray-600 text-sm">
-                {loadingStage === 'gathering' && 'Analyzing the website structure and content'}
+              <p className="text-slate-600 text-sm">
+                {loadingStage === 'gathering' && (mode === 'clone' ? 'Analyzing the website structure and content' : 'Understanding your website requirements')}
                 {loadingStage === 'planning' && 'Creating the optimal React component architecture'}
                 {(loadingStage === 'generating' || generationProgress.isGenerating) && 'Writing clean, modern code for your app'}
               </p>
@@ -1407,7 +1408,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
               ref={iframeRef}
               src={sandboxData.url}
               className="w-full h-full border-none"
-              title="Open Lovable Sandbox"
+                              title="Webly Sandbox"
               allow="clipboard-write"
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
             />
@@ -1434,10 +1435,10 @@ Tip: I automatically detect and install npm packages from your code imports (lik
       // Show loading animation when capturing screenshot
       if (isCapturingScreenshot) {
         return (
-          <div className="flex items-center justify-center h-full bg-gray-900">
+          <div className="flex items-center justify-center h-full bg-slate-900">
             <div className="text-center">
-              <div className="w-12 h-12 border-3 border-gray-600 border-t-white rounded-full animate-spin mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-white">Gathering website information</h3>
+              <div className="w-12 h-12 border-3 border-slate-600 border-t-white rounded-full animate-spin mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-white">{mode === 'clone' ? 'Gathering website information' : 'Analyzing your idea'}</h3>
             </div>
           </div>
         );
@@ -1445,7 +1446,7 @@ Tip: I automatically detect and install npm packages from your code imports (lik
       
       // Default state when no sandbox and no screenshot
       return (
-        <div className="flex items-center justify-center h-full bg-gray-50 text-gray-600 text-lg">
+        <div className="flex items-center justify-center h-full bg-slate-50 text-slate-600 text-lg">
           {screenshotError ? (
             <div className="text-center">
               <p className="mb-2">Failed to capture screenshot</p>
@@ -2258,10 +2259,12 @@ Focus on the key sections and content, making it clean and modern while preservi
         await applyGeneratedCode(generatedCode, false);
         
         addChatMessage(
-          `Successfully recreated ${url} as a modern React app${homeContextInput ? ` with your requested context: "${homeContextInput}"` : ''}! The scraped content is now in my context, so you can ask me to modify specific sections or add features based on the original site.`, 
+          mode === 'clone'
+            ? `Successfully recreated ${url} as a modern React app${homeContextInput ? ` with your requested context: "${homeContextInput}"` : ''}! The scraped content is now in my context, so you can ask me to modify specific sections or add features based on the original site.`
+            : `Successfully generated a website from your idea: "${homeUrlInput}"${homeContextInput ? ` with your requested context: "${homeContextInput}"` : ''}! The website is now ready and you can ask me to modify specific sections or add features.`, 
           'ai',
           {
-            scrapedUrl: url,
+            scrapedUrl: mode === 'clone' ? url : 'generated-from-idea',
             scrapedContent: scrapeData,
             generatedCode: generatedCode
           }
@@ -2291,11 +2294,11 @@ Focus on the key sections and content, making it clean and modern while preservi
           setActiveTab('preview');
         }, 1000); // Show completion briefly then switch
       } else {
-        throw new Error('Failed to generate recreation');
+        throw new Error(`Failed to ${mode === 'clone' ? 'generate recreation' : 'generate website'}`);
       }
       
     } catch (error: any) {
-      addChatMessage(`Failed to clone website: ${error.message}`, 'system');
+      addChatMessage(`Failed to ${mode === 'clone' ? 'clone website' : 'generate website'}: ${error.message}`, 'system');
       setUrlStatus([]);
       setIsPreparingDesign(false);
       // Clear all states on error
@@ -2354,22 +2357,30 @@ Focus on the key sections and content, making it clean and modern while preservi
     
     setHomeScreenFading(true);
     
-    // Clear messages and immediately show the cloning message
+    // Clear messages and immediately show the appropriate message
     setChatMessages([]);
-    let displayUrl = homeUrlInput.trim();
-    if (!displayUrl.match(/^https?:\/\//i)) {
-      displayUrl = 'https://' + displayUrl;
+    
+    if (mode === 'clone') {
+      let displayUrl = homeUrlInput.trim();
+      if (!displayUrl.match(/^https?:\/\//i)) {
+        displayUrl = 'https://' + displayUrl;
+      }
+      // Remove protocol for cleaner display
+      const cleanUrl = displayUrl.replace(/^https?:\/\//i, '');
+      addChatMessage(`Starting to clone ${cleanUrl}...`, 'system');
+    } else {
+      addChatMessage(`Starting to generate website from your idea: "${homeUrlInput}"...`, 'system');
     }
-    // Remove protocol for cleaner display
-    const cleanUrl = displayUrl.replace(/^https?:\/\//i, '');
-    addChatMessage(`Starting to clone ${cleanUrl}...`, 'system');
     
     // Start creating sandbox and capturing screenshot immediately in parallel
     const sandboxPromise = !sandboxData ? createSandbox(true) : Promise.resolve();
     
-    // Only capture screenshot if we don't already have a sandbox (first generation)
-    // After sandbox is set up, skip the screenshot phase for faster generation
-    if (!sandboxData) {
+    // Only capture screenshot for clone mode and if we don't already have a sandbox
+    if (mode === 'clone' && !sandboxData) {
+      let displayUrl = homeUrlInput.trim();
+      if (!displayUrl.match(/^https?:\/\//i)) {
+        displayUrl = 'https://' + displayUrl;
+      }
       captureUrlScreenshot(displayUrl);
     }
     
@@ -2385,37 +2396,56 @@ Focus on the key sections and content, making it clean and modern while preservi
       // Wait for sandbox to be ready (if it's still creating)
       await sandboxPromise;
       
-      // Now start the clone process which will stream the generation
+      // Now start the process which will stream the generation
       setUrlInput(homeUrlInput);
       setUrlOverlayVisible(false); // Make sure overlay is closed
-      setUrlStatus(['Scraping website content...']);
       
       try {
-        // Scrape the website
-        let url = homeUrlInput.trim();
-        if (!url.match(/^https?:\/\//i)) {
-          url = 'https://' + url;
+        let scrapeData;
+        let url = ''; // Declare url variable in broader scope
+        
+        if (mode === 'clone') {
+          setUrlStatus(['Scraping website content...']);
+          
+          // Scrape the website
+          url = homeUrlInput.trim();
+          if (!url.match(/^https?:\/\//i)) {
+            url = 'https://' + url;
+          }
+          
+          const scrapeResponse = await fetch('/api/scrape-url-enhanced', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url })
+          });
+          
+          if (!scrapeResponse.ok) {
+            throw new Error('Failed to scrape website');
+          }
+          
+          scrapeData = await scrapeResponse.json();
+          
+          if (!scrapeData.success) {
+            throw new Error(scrapeData.error || 'Failed to scrape website');
+          }
+          
+          setUrlStatus(['Website scraped successfully!', 'Generating React app...']);
+        } else {
+          setUrlStatus(['Analyzing your idea...', 'Generating React app...']);
+          
+          // For generate mode, create a mock scrape data structure
+          scrapeData = {
+            success: true,
+            url: 'generated-from-idea',
+            content: `Title: ${homeUrlInput}\nDescription: Website generated from user idea\nURL: generated-from-idea\n\nMain Content:\n${homeUrlInput}`,
+            structured: {
+              title: homeUrlInput,
+              description: 'Website generated from user idea',
+              content: homeUrlInput,
+              url: 'generated-from-idea'
+            }
+          };
         }
-        
-        // Screenshot is already being captured in parallel above
-        
-        const scrapeResponse = await fetch('/api/scrape-url-enhanced', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url })
-        });
-        
-        if (!scrapeResponse.ok) {
-          throw new Error('Failed to scrape website');
-        }
-        
-        const scrapeData = await scrapeResponse.json();
-        
-        if (!scrapeData.success) {
-          throw new Error(scrapeData.error || 'Failed to scrape website');
-        }
-        
-        setUrlStatus(['Website scraped successfully!', 'Generating React app...']);
         
         // Clear preparing design state and switch to generation tab
         setIsPreparingDesign(false);
@@ -2431,18 +2461,20 @@ Focus on the key sections and content, making it clean and modern while preservi
           setActiveTab('generation');
         }, 1500);
         
-        // Store scraped data in conversation context
+        // Store data in conversation context
         setConversationContext(prev => ({
           ...prev,
           scrapedWebsites: [...prev.scrapedWebsites, {
-            url: url,
+            url: mode === 'clone' ? url : 'generated-from-idea',
             content: scrapeData,
             timestamp: new Date()
           }],
-          currentProject: `${url} Clone`
+          currentProject: mode === 'clone' ? `${url} Clone` : `${homeUrlInput} Generated`
         }));
         
-        const prompt = `I want to recreate the ${url} website as a complete React application based on the scraped content below.
+        let prompt;
+        if (mode === 'clone') {
+          prompt = `I want to recreate the ${url} website as a complete React application based on the scraped content below.
 
 ${JSON.stringify(scrapeData, null, 2)}
 
@@ -2463,6 +2495,27 @@ IMPORTANT INSTRUCTIONS:
 ${homeContextInput ? '- Apply the user\'s context/theme requirements throughout the application' : ''}
 
 Focus on the key sections and content, making it clean and modern.`;
+        } else {
+          prompt = `I want to create a complete React application based on this idea: "${homeUrlInput}"
+
+${homeContextInput ? `ADDITIONAL CONTEXT/REQUIREMENTS FROM USER:
+${homeContextInput}
+
+Please incorporate these requirements into the design and implementation.` : ''}
+
+IMPORTANT INSTRUCTIONS:
+- Create a COMPLETE, working React application from scratch
+- Use Tailwind CSS for all styling (no custom CSS files)
+- Make it responsive and modern
+- Create proper component structure
+- Make sure the app actually renders visible content
+- Create ALL components that you reference in imports
+- Include appropriate sections like header, main content, footer
+- Add realistic content and features based on the idea
+${homeContextInput ? '- Apply the user\'s context/theme requirements throughout the application' : ''}
+
+Focus on creating a functional, beautiful website that matches the user's idea.`;
+        }
         
         setGenerationProgress(prev => ({
           isGenerating: true,
@@ -2676,10 +2729,12 @@ Focus on the key sections and content, making it clean and modern.`;
           await applyGeneratedCode(generatedCode, false);
           
           addChatMessage(
-            `Successfully recreated ${url} as a modern React app${homeContextInput ? ` with your requested context: "${homeContextInput}"` : ''}! The scraped content is now in my context, so you can ask me to modify specific sections or add features based on the original site.`, 
+            mode === 'clone' 
+              ? `Successfully recreated ${url} as a modern React app${homeContextInput ? ` with your requested context: "${homeContextInput}"` : ''}! The scraped content is now in my context, so you can ask me to modify specific sections or add features based on the original site.`
+              : `Successfully generated a website from your idea: "${homeUrlInput}"${homeContextInput ? ` with your requested context: "${homeContextInput}"` : ''}! The website is now ready and you can ask me to modify specific sections or add features.`, 
             'ai',
             {
-              scrapedUrl: url,
+              scrapedUrl: mode === 'clone' ? url : 'generated-from-idea',
               scrapedContent: scrapeData,
               generatedCode: generatedCode
             }
@@ -2694,7 +2749,7 @@ Focus on the key sections and content, making it clean and modern.`;
             }]
           }));
         } else {
-          throw new Error('Failed to generate recreation');
+          throw new Error(`Failed to ${mode === 'clone' ? 'generate recreation' : 'generate website'}`);
         }
         
         setUrlInput('');
@@ -2721,7 +2776,7 @@ Focus on the key sections and content, making it clean and modern.`;
           setActiveTab('preview');
         }, 1000); // Show completion briefly then switch
       } catch (error: any) {
-        addChatMessage(`Failed to clone website: ${error.message}`, 'system');
+        addChatMessage(`Failed to ${mode === 'clone' ? 'clone website' : 'generate website'}: ${error.message}`, 'system');
         setUrlStatus([]);
         setIsPreparingDesign(false);
         // Also clear generation progress on error
@@ -2742,30 +2797,22 @@ Focus on the key sections and content, making it clean and modern.`;
       {/* Home Screen Overlay */}
       {showHomeScreen && (
         <div className={`fixed inset-0 z-50 transition-opacity duration-500 ${homeScreenFading ? 'opacity-0' : 'opacity-100'}`}>
-          {/* Simple Sun Gradient Background */}
-          <div className="absolute inset-0 bg-white overflow-hidden">
-            {/* Main Sun - Pulsing */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-orange-400/50 via-orange-300/30 to-transparent rounded-full blur-[80px] animate-[sunPulse_4s_ease-in-out_infinite]" />
-            
-            {/* Inner Sun Core - Brighter */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-radial from-yellow-300/40 via-orange-400/30 to-transparent rounded-full blur-[40px] animate-[sunPulse_4s_ease-in-out_infinite_0.5s]" />
-            
-            {/* Outer Glow - Subtle */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-gradient-radial from-orange-200/20 to-transparent rounded-full blur-[120px]" />
-            
-            {/* Giant Glowing Orb - Center Bottom */}
-            <div className="absolute bottom-0 left-1/2 w-[800px] h-[800px] animate-[orbShrink_3s_ease-out_forwards]" style={{ transform: 'translateX(-50%) translateY(45%)' }}>
-              <div className="relative w-full h-full">
-                <div className="absolute inset-0 bg-orange-600 rounded-full blur-[100px] opacity-30 animate-pulse"></div>
-                <div className="absolute inset-16 bg-orange-500 rounded-full blur-[80px] opacity-40 animate-pulse" style={{ animationDelay: '0.3s' }}></div>
-                <div className="absolute inset-32 bg-orange-400 rounded-full blur-[60px] opacity-50 animate-pulse" style={{ animationDelay: '0.6s' }}></div>
-                <div className="absolute inset-48 bg-yellow-300 rounded-full blur-[40px] opacity-60"></div>
-              </div>
+          {/* Premium Background with Sophisticated Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
+            {/* Elegant Grid Pattern */}
+            <div className="absolute inset-0 opacity-25">
+              <div className="w-full h-full" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.08'%3E%3Ccircle cx='40' cy='40' r='0.5'/%3E%3C/g%3E%3C/svg%3E")`
+              }}></div>
             </div>
+            
+            {/* Sophisticated Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-white/70"></div>
+            <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-slate-100/50 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-slate-50/30 to-transparent"></div>
           </div>
           
-          
-          {/* Close button on hover */}
+          {/* Elegant Close Button */}
           <button
             onClick={() => {
               setHomeScreenFading(true);
@@ -2774,55 +2821,78 @@ Focus on the key sections and content, making it clean and modern.`;
                 setHomeScreenFading(false);
               }, 500);
             }}
-            className="absolute top-8 right-8 text-gray-500 hover:text-gray-700 transition-all duration-300 opacity-0 hover:opacity-100 bg-white/80 backdrop-blur-sm p-2 rounded-lg shadow-sm"
+            className="absolute top-12 right-12 text-gray-400 hover:text-gray-600 transition-all duration-500 opacity-0 hover:opacity-100 bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl hover:scale-110"
             style={{ opacity: 0 }}
-            onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
             onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}
           >
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
           
-          {/* Header */}
-          <div className="absolute top-0 left-0 right-0 z-20 px-6 py-4 flex items-center justify-between animate-[fadeIn_0.8s_ease-out]">
-            <img
-              src="/firecrawl-logo-with-fire.webp"
-              alt="Firecrawl"
-              className="h-8 w-auto"
-            />
-            <a 
-              href="https://github.com/mendableai/open-lovable" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#36322F] text-white px-3 py-2 rounded-[10px] text-sm font-medium [box-shadow:inset_0px_-2px_0px_0px_#171310,_0px_1px_6px_0px_rgba(58,_33,_8,_58%)] hover:translate-y-[1px] hover:scale-[0.98] hover:[box-shadow:inset_0px_-1px_0px_0px_#171310,_0px_1px_3px_0px_rgba(58,_33,_8,_40%)] active:translate-y-[2px] active:scale-[0.97] active:[box-shadow:inset_0px_1px_1px_0px_#171310,_0px_1px_2px_0px_rgba(58,_33,_8,_30%)] transition-all duration-200"
-            >
-              <FiGithub className="w-4 h-4" />
-              <span>Use this template</span>
-            </a>
+          {/* Premium Header */}
+          <div className="absolute top-0 left-0 right-0 z-20 px-12 py-12 flex items-center justify-between animate-[fadeIn_1s_ease-out]">
+            <div className="text-4xl font-black bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent tracking-tight">
+              Webly
+            </div>
           </div>
           
-          {/* Main content */}
-          <div className="relative z-10 h-full flex items-center justify-center px-4">
-            <div className="text-center max-w-4xl min-w-[600px] mx-auto">
-              {/* Firecrawl-style Header */}
-              <div className="text-center">
-                <h1 className="text-[2.5rem] lg:text-[3.8rem] text-center text-[#36322F] font-semibold tracking-tight leading-[0.9] animate-[fadeIn_0.8s_ease-out]">
-                  <span className="hidden md:inline">Open Lovable</span>
-                  <span className="md:hidden">Open Lovable</span>
-                </h1>
-                <motion.p 
-                  className="text-base lg:text-lg max-w-lg mx-auto mt-2.5 text-zinc-500 text-center text-balance"
+          {/* World-Class Main Content */}
+          <div className="relative z-10 h-full flex items-center justify-center px-12">
+            <div className="text-center max-w-7xl w-full mx-auto">
+              {/* Hero Section */}
+              <div className="text-center mb-20">
+                <motion.h1 
+                  className="text-5xl lg:text-7xl max-w-5xl mx-auto text-slate-900 text-center text-balance font-black leading-[0.9] tracking-tight"
                   animate={{
                     opacity: showStyleSelector ? 0.7 : 1
                   }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
                 >
-                  Re-imagine any website, in seconds.
-                </motion.p>
+                  {mode === 'clone' ? 'Recreate any website with AI in seconds.' : 'From ideas to websites in seconds.'}
+                </motion.h1>
               </div>
               
-              <form onSubmit={handleHomeScreenSubmit} className="mt-5 max-w-3xl mx-auto">
+              {/* Premium Mode Toggle */}
+              <div className="flex items-center justify-center gap-8 mb-20">
+                <button
+                  type="button"
+                  onClick={() => {
+                    console.log('Clone button clicked');
+                    setMode('clone');
+                    setShowStyleSelector(false);
+                    setSelectedStyle(null);
+                    setHomeContextInput('');
+                  }}
+                  className={`px-12 py-6 text-xl font-bold rounded-3xl transition-all duration-500 cursor-pointer border-2 shadow-2xl hover:shadow-3xl ${
+                    mode === 'clone'
+                      ? 'bg-slate-900 text-white border-slate-900 shadow-3xl transform scale-105'
+                      : 'bg-white/95 backdrop-blur-sm text-slate-700 border-slate-200 hover:bg-white hover:border-slate-300 hover:scale-105'
+                  }`}
+                >
+                  Clone Website
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    console.log('Generate button clicked');
+                    setMode('generate');
+                    setShowStyleSelector(false);
+                    setSelectedStyle(null);
+                    setHomeContextInput('');
+                  }}
+                  className={`px-12 py-6 text-xl font-bold rounded-3xl transition-all duration-500 cursor-pointer border-2 shadow-2xl hover:shadow-3xl ${
+                    mode === 'generate'
+                      ? 'bg-slate-900 text-white border-slate-900 shadow-3xl transform scale-105'
+                      : 'bg-white/95 backdrop-blur-sm text-slate-700 border-slate-200 hover:bg-white hover:border-slate-300 hover:scale-105'
+                  }`}
+                >
+                  Generate from Idea
+                </button>
+              </div>
+              
+              <form onSubmit={handleHomeScreenSubmit} className="max-w-6xl mx-auto">
                 <div className="w-full relative group">
                   <input
                     type="text"
@@ -2831,42 +2901,56 @@ Focus on the key sections and content, making it clean and modern.`;
                       const value = e.target.value;
                       setHomeUrlInput(value);
                       
-                      // Check if it's a valid domain
-                      const domainRegex = /^(https?:\/\/)?(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(\/?.*)?$/;
-                      if (domainRegex.test(value) && value.length > 5) {
-                        // Small delay to make the animation feel smoother
-                        setTimeout(() => setShowStyleSelector(true), 100);
+                      if (mode === 'clone') {
+                        // Check if it's a valid domain
+                        const domainRegex = /^(https?:\/\/)?(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(\/?.*)?$/;
+                        if (domainRegex.test(value) && value.length > 5) {
+                          // Small delay to make the animation feel smoother
+                          setTimeout(() => setShowStyleSelector(true), 100);
+                        } else {
+                          setShowStyleSelector(false);
+                          setSelectedStyle(null);
+                        }
                       } else {
-                        setShowStyleSelector(false);
-                        setSelectedStyle(null);
+                        // For generate mode, show style selector when there's substantial input
+                        if (value.length > 10) {
+                          setTimeout(() => setShowStyleSelector(true), 100);
+                        } else {
+                          setShowStyleSelector(false);
+                          setSelectedStyle(null);
+                        }
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Tab') {
+                        e.preventDefault();
+                        const exampleText = mode === 'clone' ? 'https://vancouver.dev' : 'A portfolio website for a photographer';
+                        setHomeUrlInput(exampleText);
                       }
                     }}
                     placeholder=" "
-                    aria-placeholder="https://firecrawl.dev"
-                    className="h-[3.25rem] w-full resize-none focus-visible:outline-none focus-visible:ring-orange-500 focus-visible:ring-2 rounded-[18px] text-sm text-[#36322F] px-4 pr-12 border-[.75px] border-border bg-white"
-                    style={{
-                      boxShadow: '0 0 0 1px #e3e1de66, 0 1px 2px #5f4a2e14, 0 4px 6px #5f4a2e0a, 0 40px 40px -24px #684b2514',
-                      filter: 'drop-shadow(rgba(249, 224, 184, 0.3) -0.731317px -0.731317px 35.6517px)'
-                    }}
+                    aria-placeholder={mode === 'clone' ? "https://vancouver.dev" : "A portfolio website for a photographer"}
+                    className="h-24 w-full resize-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-slate-900 focus-visible:ring-offset-4 rounded-3xl text-2xl text-slate-900 px-10 pr-24 border-2 border-slate-200 bg-white/95 backdrop-blur-sm shadow-3xl hover:shadow-4xl transition-all duration-500 font-medium"
                     autoFocus
                   />
                   <div 
                     aria-hidden="true" 
-                    className={`absolute top-1/2 -translate-y-1/2 left-4 pointer-events-none text-sm text-opacity-50 text-start transition-opacity ${
+                    className={`absolute top-1/2 -translate-y-1/2 left-10 pointer-events-none text-2xl transition-opacity duration-500 ${
                       homeUrlInput ? 'opacity-0' : 'opacity-100'
                     }`}
                   >
-                    <span className="text-[#605A57]/50" style={{ fontFamily: 'monospace' }}>
-                      https://firecrawl.dev
+                    <span className="text-slate-400 font-medium" style={{ fontFamily: mode === 'clone' ? 'monospace' : 'inherit' }}>
+                      {mode === 'clone' ? 'https://vancouver.dev' : 'A portfolio website for a photographer'}
                     </span>
+                    <span className="text-slate-300 text-sm ml-2 opacity-60">(Press Tab to auto-fill)</span>
                   </div>
                   <button
                     type="submit"
                     disabled={!homeUrlInput.trim()}
-                    className="absolute top-1/2 transform -translate-y-1/2 right-2 flex h-10 items-center justify-center rounded-md px-3 text-sm font-medium text-zinc-500 hover:text-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    title={selectedStyle ? `Clone with ${selectedStyle} Style` : 'Clone Website'}
+                    className="absolute top-1/2 transform -translate-y-1/2 right-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-900 text-white hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-slate-900 focus-visible:ring-offset-4 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 shadow-3xl hover:shadow-4xl hover:scale-110"
+                    title={selectedStyle ? `${mode === 'clone' ? 'Clone' : 'Generate'} with ${selectedStyle} Style` : mode === 'clone' ? 'Clone Website' : 'Generate Website'}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
                       <polyline points="9 10 4 15 9 20"></polyline>
                       <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
                     </svg>
@@ -2875,23 +2959,23 @@ Focus on the key sections and content, making it clean and modern.`;
                   
                   {/* Style Selector - Slides out when valid domain is entered */}
                   {showStyleSelector && (
-                    <div className="overflow-hidden mt-4">
+                    <div className="overflow-hidden mt-8">
                       <div className={`transition-all duration-500 ease-out transform ${
                         showStyleSelector ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
                       }`}>
-                    <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-4 shadow-sm">
-                      <p className="text-sm text-gray-600 mb-3 font-medium">How do you want your site to look?</p>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        {[
-                          { name: 'Neobrutalist', description: 'Bold colors, thick borders' },
-                          { name: 'Glassmorphism', description: 'Frosted glass effects' },
-                          { name: 'Minimalist', description: 'Clean and simple' },
-                          { name: 'Dark Mode', description: 'Dark theme' },
-                          { name: 'Gradient', description: 'Colorful gradients' },
-                          { name: 'Retro', description: '80s/90s aesthetic' },
-                          { name: 'Modern', description: 'Contemporary design' },
-                          { name: 'Monochrome', description: 'Black and white' }
-                        ].map((style) => (
+                        <div className="bg-white/95 backdrop-blur-sm border-2 border-gray-200 rounded-2xl p-8 shadow-xl">
+                          <p className="text-lg text-gray-700 mb-6 font-semibold text-center">How do you want your site to look?</p>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            {[
+                              { name: 'Neobrutalist', description: 'Bold colors, thick borders' },
+                              { name: 'Glassmorphism', description: 'Frosted glass effects' },
+                              { name: 'Minimalist', description: 'Clean and simple' },
+                              { name: 'Dark Mode', description: 'Dark theme' },
+                              { name: 'Gradient', description: 'Colorful gradients' },
+                              { name: 'Retro', description: '80s/90s aesthetic' },
+                              { name: 'Modern', description: 'Contemporary design' },
+                              { name: 'Monochrome', description: 'Black and white' }
+                            ].map((style) => (
                           <button
                             key={style.name}
                             type="button"
@@ -2923,18 +3007,18 @@ Focus on the key sections and content, making it clean and modern.`;
                             }}
                             className={`p-3 rounded-lg border transition-all ${
                               selectedStyle === style.name
-                                ? 'border-orange-400 bg-orange-50 text-gray-900 shadow-sm'
-                                : 'border-gray-200 bg-white hover:border-orange-200 hover:bg-orange-50/50 text-gray-700'
+                                ? 'border-black bg-black text-white shadow-lg'
+                                : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50 text-gray-700'
                             }`}
                           >
-                            <div className="text-sm font-medium">{style.name}</div>
-                            <div className="text-xs text-gray-500 mt-1">{style.description}</div>
+                            <div className="text-base font-semibold">{style.name}</div>
+                            <div className="text-sm text-gray-500 mt-2 opacity-80">{style.description}</div>
                           </button>
                         ))}
                       </div>
                       
                       {/* Additional context input - part of the style selector */}
-                      <div className="mt-4 mb-2">
+                      <div className="mt-6 mb-2">
                         <input
                           type="text"
                           value={(() => {
@@ -2961,7 +3045,7 @@ Focus on the key sections and content, making it clean and modern.`;
                             }
                           }}
                           placeholder="Add more details: specific features, color preferences..."
-                          className="w-full px-4 py-2 text-sm bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100 transition-all duration-200"
+                          className="w-full px-6 py-4 text-base bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-black focus:ring-offset-2 transition-all duration-200 shadow-sm hover:shadow-md"
                         />
                       </div>
                     </div>
@@ -2970,32 +3054,7 @@ Focus on the key sections and content, making it clean and modern.`;
                   )}
               </form>
               
-              {/* Model Selector */}
-              <div className="mt-6 flex items-center justify-center animate-[fadeIn_1s_ease-out]">
-                <select
-                  value={aiModel}
-                  onChange={(e) => {
-                    const newModel = e.target.value;
-                    setAiModel(newModel);
-                    const params = new URLSearchParams(searchParams);
-                    params.set('model', newModel);
-                    if (sandboxData?.sandboxId) {
-                      params.set('sandbox', sandboxData.sandboxId);
-                    }
-                    router.push(`/?${params.toString()}`);
-                  }}
-                  className="px-3 py-1.5 text-sm bg-white border border-gray-300 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#36322F] focus:border-transparent"
-                  style={{
-                    boxShadow: '0 0 0 1px #e3e1de66, 0 1px 2px #5f4a2e14'
-                  }}
-                >
-                  {appConfig.ai.availableModels.map(model => (
-                    <option key={model} value={model}>
-                      {appConfig.ai.modelDisplayNames[model] || model}
-                    </option>
-                  ))}
-                </select>
-              </div>
+
             </div>
           </div>
         </div>
@@ -3003,34 +3062,11 @@ Focus on the key sections and content, making it clean and modern.`;
       
       <div className="bg-card px-4 py-4 border-b border-border flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <img
-            src="/firecrawl-logo-with-fire.webp"
-            alt="Firecrawl"
-            className="h-8 w-auto"
-          />
+          <div className="text-xl font-bold text-[#36322F]">
+            Webly
+          </div>
         </div>
         <div className="flex items-center gap-2">
-          {/* Model Selector - Left side */}
-          <select
-            value={aiModel}
-            onChange={(e) => {
-              const newModel = e.target.value;
-              setAiModel(newModel);
-              const params = new URLSearchParams(searchParams);
-              params.set('model', newModel);
-              if (sandboxData?.sandboxId) {
-                params.set('sandbox', sandboxData.sandboxId);
-              }
-              router.push(`/?${params.toString()}`);
-            }}
-            className="px-3 py-1.5 text-sm bg-white border border-gray-300 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#36322F] focus:border-transparent"
-          >
-            {appConfig.ai.availableModels.map(model => (
-              <option key={model} value={model}>
-                {appConfig.ai.modelDisplayNames[model] || model}
-              </option>
-            ))}
-          </select>
           <Button 
             variant="code"
             onClick={() => createSandbox()}
@@ -3080,8 +3116,12 @@ Focus on the key sections and content, making it clean and modern.`;
                   // Extract favicon and site info from the scraped data
                   const metadata = site.content?.metadata || {};
                   const sourceURL = metadata.sourceURL || site.url;
-                  const favicon = metadata.favicon || `https://www.google.com/s2/favicons?domain=${new URL(sourceURL).hostname}&sz=32`;
-                  const siteName = metadata.ogSiteName || metadata.title || new URL(sourceURL).hostname;
+                  
+                  // Check if sourceURL is a valid URL (not for generated-from-idea)
+                  const isValidURL = sourceURL && sourceURL !== 'generated-from-idea' && (sourceURL.startsWith('http://') || sourceURL.startsWith('https://'));
+                  
+                  const favicon = metadata.favicon || (isValidURL ? `https://www.google.com/s2/favicons?domain=${new URL(sourceURL).hostname}&sz=32` : '/favicon.ico');
+                  const siteName = metadata.ogSiteName || metadata.title || (isValidURL ? new URL(sourceURL).hostname : 'Generated Website');
                   
                   return (
                     <div key={idx} className="flex items-center gap-2 text-sm">
@@ -3090,18 +3130,28 @@ Focus on the key sections and content, making it clean and modern.`;
                         alt={siteName}
                         className="w-4 h-4 rounded"
                         onError={(e) => {
-                          e.currentTarget.src = `https://www.google.com/s2/favicons?domain=${new URL(sourceURL).hostname}&sz=32`;
+                          if (isValidURL) {
+                            e.currentTarget.src = `https://www.google.com/s2/favicons?domain=${new URL(sourceURL).hostname}&sz=32`;
+                          } else {
+                            e.currentTarget.src = '/favicon.ico';
+                          }
                         }}
                       />
-                      <a 
-                        href={sourceURL} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-black hover:text-gray-700 truncate max-w-[250px]"
-                        title={sourceURL}
-                      >
-                        {siteName}
-                      </a>
+                      {isValidURL ? (
+                        <a 
+                          href={sourceURL} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-black hover:text-gray-700 truncate max-w-[250px]"
+                          title={sourceURL}
+                        >
+                          {siteName}
+                        </a>
+                      ) : (
+                        <span className="text-black truncate max-w-[250px]" title={sourceURL}>
+                          {siteName}
+                        </span>
+                      )}
                     </div>
                   );
                 })}

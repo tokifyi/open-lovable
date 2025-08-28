@@ -1154,11 +1154,11 @@ CRITICAL: When files are provided in the context:
         // Determine which provider to use based on model
         const isAnthropic = model.startsWith('anthropic/');
         const isGoogle = model.startsWith('google/');
-        const isOpenAI = model.startsWith('openai/gpt-5');
+        const isOpenAI = model.startsWith('openai/');
         const modelProvider = isAnthropic ? anthropic : (isOpenAI ? openai : (isGoogle ? googleGenerativeAI : groq));
         const actualModel = isAnthropic ? model.replace('anthropic/', '') : 
-                           (model === 'openai/gpt-5') ? 'gpt-5' :
-                           (isGoogle ? model.replace('google/', '') : model);
+                           (isOpenAI ? model.replace('openai/', '') :
+                           (isGoogle ? model.replace('google/', '') : model));
 
         // Make streaming API call with appropriate provider
         const streamOptions: any = {

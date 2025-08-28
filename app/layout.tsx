@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Open Lovable",
+  title: "Webly",
   description: "Re-imagine any website in seconds with AI-powered website builder.",
 };
 

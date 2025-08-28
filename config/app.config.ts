@@ -28,10 +28,12 @@ export const appConfig = {
   // AI Model Configuration
   ai: {
     // Default AI model
-    defaultModel: 'moonshotai/kimi-k2-instruct',
+    defaultModel: 'openai/gpt-4',
     
     // Available models
     availableModels: [
+      'openai/gpt-4',
+      'openai/gpt-4o',
       'openai/gpt-5',
       'moonshotai/kimi-k2-instruct',
       'anthropic/claude-sonnet-4-20250514',
@@ -40,6 +42,8 @@ export const appConfig = {
     
     // Model display names
     modelDisplayNames: {
+      'openai/gpt-4o': 'GPT-4o',
+      'openai/gpt-4': 'GPT-4',
       'openai/gpt-5': 'GPT-5',
       'moonshotai/kimi-k2-instruct': 'Kimi K2 Instruct',
       'anthropic/claude-sonnet-4-20250514': 'Sonnet 4',
